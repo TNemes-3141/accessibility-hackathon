@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useRef } from "react";
 
 export default function Home() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   return (
     <main>
       <div className="container mx-auto my-10">
@@ -22,7 +22,7 @@ export default function Home() {
               className="absolute bottom-0 border-radius-50"
               aria-label="Fragen zum Bild stellen"
               onClick={() => {
-                setIsChatOpen(true);
+                dialogRef.current?.showModal();
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -61,7 +61,7 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <dialog open={isChatOpen} className="fixed bottom-0 right-0">
+      <dialog ref={dialogRef} className="fixed bottom-0 right-0">
         <h2>Stelle Fragen zum Produkt</h2>
       </dialog>
     </main>
