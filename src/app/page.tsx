@@ -3,7 +3,7 @@ import { RatingStars } from "@/components/ratingStars/ratingStars";
 import { useEffect, useRef, useState } from "react";
 import { Chat } from "../components/chat/chat";
 import { AssistantButton } from "@/components/assistantButton/assistantButton";
-import { Cart, Help } from "@/components/icon/icon";
+import { Cart, Close } from "@/components/icon/icon";
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -43,8 +43,8 @@ export default function Home() {
       <div className="container mx-auto my-10">
         <div className="flex gap-10">
           <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <AssistantButton dialogRef={dialogRef} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={productImageSrc}
               alt={productImageAlt}
@@ -83,22 +83,8 @@ export default function Home() {
           className="absolute top-2 right-2"
           onClick={() => dialogRef.current?.close()}
         >
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 48 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M31.4697 32.5304C31.7626 32.8233 32.2375 32.8233 32.5304 32.5304C32.8233 32.2375 32.8233 31.7626 32.5304 31.4697L31.4697 32.5304ZM16.5303 15.4697C16.2374 15.1768 15.7626 15.1768 15.4697 15.4697C15.1768 15.7626 15.1768 16.2374 15.4697 16.5303L16.5303 15.4697ZM32.5304 31.4697L16.5303 15.4697L15.4697 16.5303L31.4697 32.5304L32.5304 31.4697Z"
-              fill="#72777A"
-            />
-            <path
-              d="M32.5303 16.5303C32.8232 16.2374 32.8232 15.7625 32.5303 15.4696C32.2374 15.1767 31.7626 15.1767 31.4697 15.4696L32.5303 16.5303ZM15.4696 31.4697C15.1767 31.7626 15.1767 32.2374 15.4696 32.5303C15.7625 32.8232 16.2374 32.8232 16.5303 32.5303L15.4696 31.4697ZM31.4697 15.4696L15.4696 31.4697L16.5303 32.5303L32.5303 16.5303L31.4697 15.4696Z"
-              fill="#72777A"
-            />
-          </svg>
+          <span className="sr-only">Schliessen</span>
+          <Close />
         </button>
         <h2 className="mb-4 text-l font-bold">Stelle Fragen zum Produkt</h2>
         <Chat
