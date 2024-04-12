@@ -123,60 +123,73 @@ Gewicht
   }, []);
 
   return (
-    <main>
-      <div className="container mx-auto my-10">
-        <div className="flex gap-10">
-          <div className="relative">
-            <AssistantButton dialogRef={dialogRef} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={productImageSrc}
-              alt={productImageAlt}
-              className="max-w-48"
-              ref={imageRef}
-            />
-          </div>
-          <div>
-            <div className="flex flex-col-reverse">
-              <h1 className="text-xl font-bold mb-2">{productTitle}</h1>
-              <strong className="text-xl">509 CHF</strong>
+    <div className="flex flex-col min-h-screen">
+      <main>
+        <div className="container mx-auto my-10 px-4">
+          <div className="flex gap-10">
+            <div className="relative">
+              <AssistantButton dialogRef={dialogRef} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={productImageSrc}
+                alt={productImageAlt}
+                className="max-w-48"
+                ref={imageRef}
+              />
             </div>
-            <section>
-              <RatingStars />
-              <div className="mt-7">
-                <button
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
-                  type="button"
-                  title="In den Warenkorb"
-                >
-                  <Cart />
-                  In den Warenkorb
-                </button>
+            <div>
+              <div className="flex flex-col-reverse">
+                <h1 className="text-xl font-bold mb-2">{productTitle}</h1>
+                <strong className="text-xl">509 CHF</strong>
               </div>
-            </section>
+              <section>
+                <RatingStars />
+                <div className="mt-7">
+                  <button
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
+                    type="button"
+                    title="In den Warenkorb"
+                  >
+                    <Cart />
+                    In den Warenkorb
+                  </button>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
-      <dialog
-        ref={dialogRef}
-        className="p-5 shadow-md rounded-md max-w-screen-md absolute mb-0 mt-auto md:relative md:mt-auto md:mb-auto md:min-w-[800px]"
-      >
-        <button
-          className="absolute top-2 right-2 rounded-full"
-          onClick={() => dialogRef.current?.close()}
+        <dialog
+          ref={dialogRef}
+          className="p-5 shadow-md rounded-md max-w-screen-md absolute mb-0 mt-auto md:relative md:mt-auto md:mb-auto md:min-w-[800px]"
         >
-          <span className="sr-only">Schliessen</span>
-          <Close />
-        </button>
-        <h2 className="mb-4 text-l font-bold">Stelle Fragen zum Produkt</h2>
-        <Chat
-          productImage={productImage}
-          productImageAlt={productImageAlt}
-          productDescription={productDescription}
-          productSpecification={productSpecification}
-          dialogRef={dialogRef}
-        />
-      </dialog>
-    </main>
+          <button
+            className="absolute top-2 right-2 rounded-full"
+            onClick={() => dialogRef.current?.close()}
+          >
+            <span className="sr-only">Schliessen</span>
+            <Close />
+          </button>
+          <h2 className="mb-4 text-l font-bold">Stelle Fragen zum Produkt</h2>
+          <Chat
+            productImage={productImage}
+            productImageAlt={productImageAlt}
+            productDescription={productDescription}
+            productSpecification={productSpecification}
+            dialogRef={dialogRef}
+          />
+        </dialog>
+      </main>
+      <footer className="mt-auto">
+        <p className="container mx-auto my-10 px-4">
+          Code:{" "}
+          <a
+            href="https://github.com/Totemi1324/accessibility-hackathon"
+            className="underline"
+          >
+            GitHub Repository
+          </a>
+        </p>
+      </footer>
+    </div>
   );
 }
