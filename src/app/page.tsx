@@ -1,4 +1,5 @@
 "use client";
+import { RatingStars } from "@/components/ratingStars/ratingStars";
 import { useRef } from "react";
 
 export default function Home() {
@@ -6,10 +7,7 @@ export default function Home() {
   return (
     <main>
       <div className="container mx-auto my-10">
-        <h1 className="text-xl font-bold">Samsung NV70K1340BS/EG</h1>
-        <p>E-Commerce Chatbot für Bildbeschreibungen</p>
-        <section>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+        <div className="flex gap-10">
           <div className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -60,11 +58,40 @@ export default function Home() {
               </svg>
             </button>
           </div>
-        </section>
+          <div>
+            <div className="flex flex-col-reverse">
+              <h1 className="text-xl font-bold mb-2">Samsung NV70K1340BS/EG</h1>
+              <strong className="text-xl">509 CHF</strong>
+            </div>
+            <section>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <RatingStars />
+              <div className="mt-7">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
+                  type="button"
+                  id="addToCartButton"
+                  data-test="addToCartButton"
+                  title="In den Warenkorb"
+                >
+                  <svg fill="none" viewBox="0 0 16 16" width="16" height="16">
+                    <path
+                      fill="#fff"
+                      fill-rule="evenodd"
+                      d="M15 4H3.728l2.225 6.113L15 8.19zm1-1v6L5.311 11.272 1.936 2H0V1h2.636l.728 2zM3.5 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M14 13.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  In den Warenkorb
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+        <dialog ref={dialogRef} className="fixed bottom-0 right-0">
+          <h2>Stelle Fragen zum Produkt</h2>
+        </dialog>
       </div>
-      <dialog ref={dialogRef} className="fixed bottom-0 right-0">
-        <h2>Stelle Fragen zum Produkt</h2>
-      </dialog>
     </main>
   );
 }
