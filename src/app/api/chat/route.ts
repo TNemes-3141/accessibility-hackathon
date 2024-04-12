@@ -27,7 +27,6 @@ export async function POST(req: Request) {
   const { message, init } = await req.json();
 
   if (init) {
-    console.log({ init });
     // TODO: fetch initial response
     return Response.json({
       message: "Dieses Bild zeigt ...",
