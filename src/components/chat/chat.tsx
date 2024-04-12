@@ -112,7 +112,7 @@ export function Chat({
               type="text"
               name="message"
               id="message"
-              className="border border-gray-300 rounded-full px-4 pr-12 py-3 w-full"
+              className="border border-gray-500 rounded-full px-4 pr-12 py-3 w-full placeholder:text-stone-500"
               placeholder="Deine Frage..."
             />
             <button className="absolute top-2 right-2 p-2 rounded-full">
