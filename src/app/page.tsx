@@ -123,7 +123,7 @@ Gewicht
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-dvh">
       <main>
         <div className="container mx-auto my-10 px-4">
           <div className="flex gap-10">
@@ -180,7 +180,7 @@ Gewicht
         </dialog>
       </main>
       <footer className="mt-auto">
-        <p className="container mx-auto my-10 px-4">
+        <p className="container mx-auto my-4 px-4">
           Code:{" "}
           <a
             href="https://github.com/Totemi1324/accessibility-hackathon"
