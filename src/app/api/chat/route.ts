@@ -20,6 +20,7 @@ export type ChatInput =
         productImage: string;
         productImageAlt?: string;
         productDescription: string;
+        productSpecification: string;
       };
     };
 
@@ -37,7 +38,8 @@ export async function POST(req: Request) {
   if (history && history.length > 0) {
     history.forEach((chatMessage: ChatMessage) => {
       // Capitalize the first letter of the role and append the message
-      const role = chatMessage.role.charAt(0).toUpperCase() + chatMessage.role.slice(1);
+      const role =
+        chatMessage.role.charAt(0).toUpperCase() + chatMessage.role.slice(1);
       // Append formatted message to historyString
       historyString += `${role}: ${chatMessage.message}\n`;
     });
@@ -57,19 +59,25 @@ export async function POST(req: Request) {
             {
               type: "image_url",
               image_url: {
-                "url": init.productImage,
-              }
+                url: init.productImage,
+              },
             },
             {
               type: "text",
-              text: init.productImageAlt ? "ALT text: " + init.productImageAlt : "none",
+              text: init.productImageAlt
+                ? "ALT text: " + init.productImageAlt
+                : "none",
             },
             {
               type: "text",
               text: init.productDescription,
-            }
-          ]
-        }
+            },
+            {
+              type: "text",
+              text: init.productSpecification,
+            },
+          ],
+        },
       ],
     });
 
@@ -93,9 +101,9 @@ export async function POST(req: Request) {
           {
             type: "text",
             text: message,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
   });
 

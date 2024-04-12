@@ -14,6 +14,90 @@ export default function Home() {
   const productImageSrc = "/oven.avif";
   const productImageAlt = "Einbau-Backofen Samsung NV70K1340BS";
   const productDescription = `Der Einbau-Backofen Samsung NV70K1340BS überzeugt mit einem Nutzinahlt von 70 Litern. Fünf Heizarten inklusive Grill und Pizzastufe machen das Kochen, Backen und Garen für angehende Köche zur Leichtigkeit. Zwei Ventilatoren verteilen die Hitze gleichmässig im ganzen Garraum - ganz gleich, ob auf einer oder auf mehreren Ebenen gegart wird. Auch die Reinigung und Pflege des NV70K1340BS geht dank emaillierter Backofeninnenwände und katalytisch-selbstreinigender Rückwand wie von selbst. Bei der Katalyse-Technik werden bei hohen Temperaturen von über 200 °C vorhandene Fettablagerungen einfach abgebaut. Darüber hinaus überzeugt der NV70K1340BS mit einer Kindersicherung, einem LED-Display mit Timer sowie der Energieeffizienzklasse A.`;
+  const productSpecification = `Norm	
+EU-Norm 60cm
+Garraumvolumen	
+70 l
+Breite	
+59.50 cm
+Tiefe	
+56.60 cm
+Höhe	
+59.50 cm
+Farbe	
+Silber
+Artikelnummer	
+12240816
+Allgemeine Informationen
+Hersteller	
+Samsung
+Kategorie	
+Backofen Einbaui
+Herstellernr.	
+NV70K1340BS/EG
+Release-Datum	
+28.10.2019
+Ist möglicherweise mit einem Stromadapter ausgestattet	
+Jai
+Farbe
+Farbgruppe	
+Silber
+Genaue Farbbezeichnung	
+Schwarz, Silber
+Material
+Genaue Materialbezeichnung	
+Keramiki
+Grossgerät Bauform
+Norm	
+EU-Norm 60cm
+Einbauform	
+Integrierbari
+Türanschlag	
+Unten
+Grossgerät Eigenschaften
+Garraumvolumen	
+70 l
+Beheizungsart	
+Heissluft, Ober- und Unterhitze, Umluft
+Energieversorgungi
+Energieverbrauch Garen Konventionell	
+0.99 kWh
+Spannung	
+230 V
+Energiedeklaration
+Energieeffizienzklasse 2020	
+A
+Produktdimensionen
+Breite	
+59.50 cm
+Tiefe	
+56.60 cm
+Höhe	
+59.50 cm
+Nischenbreite	
+56 cm
+Nischentiefe	
+54.50 cm
+Nischenhöhe	
+57.20 cm
+Gewicht	
+32.60 kg
+Klimabeitrag
+Du kannst freiwillig in der Kasse einen Klimabeitrag leisten. Mehr erfahren
+
+CO₂-Emission	
+196.06 kg
+Klimabeitrag	
+CHF 4.66
+Verpackungsdimensionen
+Länge	
+70 cm
+Breite	
+70 cm
+Höhe	
+70 cm
+Gewicht	
+38 kg`;
 
   const setImage = (image: HTMLImageElement) => {
     const canvas = document.createElement("canvas");
@@ -89,6 +173,7 @@ export default function Home() {
           productImage={productImage}
           productImageAlt={productImageAlt}
           productDescription={productDescription}
+          productSpecification={productSpecification}
         />
       </dialog>
     </main>

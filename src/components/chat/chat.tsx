@@ -8,10 +8,12 @@ export function Chat({
   productImage,
   productDescription,
   productImageAlt,
+  productSpecification,
 }: {
   productImage: string;
   productDescription: string;
   productImageAlt: string;
+  productSpecification: string;
 }) {
   const [messages, setMessages] = useState<Array<ChatMessage>>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,7 @@ export function Chat({
           productImage,
           productDescription,
           productImageAlt,
+          productSpecification,
         },
       }),
     })
@@ -39,7 +42,7 @@ export function Chat({
 
         setIsInitializing(false);
       });
-  }, [productImage, productDescription, productImageAlt]);
+  }, [productImage, productDescription, productImageAlt, productSpecification]);
 
   return (
     <form
