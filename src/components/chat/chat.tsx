@@ -95,6 +95,11 @@ export function Chat({
         form.reset();
       }}
     >
+      {isLoading && (
+        <p className="sr-only" aria-live="polite">
+          Die Beantwortung deiner Frage ist im Gange...
+        </p>
+      )}
       {isInitializing && (
         <p className="mb-6">
           🦅 Dein Hawkeye analyisiert gerade das Produkt...
