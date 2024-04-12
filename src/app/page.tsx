@@ -1,10 +1,40 @@
 "use client";
 import { RatingStars } from "@/components/ratingStars/ratingStars";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Chat } from "../components/chat/chat";
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [productImage, setProductImage] = useState<string>("");
+
+  const productTitle = "Samsung NV70K1340BS/EG";
+  const productImageSrc = "/oven.avif";
+  const productImageAlt = "Einbau-Backofen Samsung NV70K1340BS";
+  const productDescription = `Der Einbau-Backofen Samsung NV70K1340BS überzeugt mit einem Nutzinahlt von 70 Litern. Fünf Heizarten inklusive Grill und Pizzastufe machen das Kochen, Backen und Garen für angehende Köche zur Leichtigkeit. Zwei Ventilatoren verteilen die Hitze gleichmässig im ganzen Garraum - ganz gleich, ob auf einer oder auf mehreren Ebenen gegart wird. Auch die Reinigung und Pflege des NV70K1340BS geht dank emaillierter Backofeninnenwände und katalytisch-selbstreinigender Rückwand wie von selbst. Bei der Katalyse-Technik werden bei hohen Temperaturen von über 200 °C vorhandene Fettablagerungen einfach abgebaut. Darüber hinaus überzeugt der NV70K1340BS mit einer Kindersicherung, einem LED-Display mit Timer sowie der Energieeffizienzklasse A.`;
+
+  const setImage = (image: HTMLImageElement) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx?.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
+
+    setProductImage(canvas.toDataURL());
+  };
+
+  useEffect(() => {
+    if (!imageRef.current) return;
+
+    if (imageRef.current.complete) {
+      setImage(imageRef.current);
+    } else {
+      imageRef.current.addEventListener("load", () => {
+        if (imageRef.current) {
+          setImage(imageRef.current);
+        }
+      });
+    }
+  }, []);
 
   return (
     <main>
@@ -12,7 +42,12 @@ export default function Home() {
         <div className="flex gap-10">
           <div className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/oven.avif" alt="" className="max-w-48" />
+            <img
+              src={productImageSrc}
+              alt=""
+              className="max-w-48"
+              ref={imageRef}
+            />
             <button
               type="button"
               className="absolute bottom-0 border-radius-50"
@@ -58,7 +93,7 @@ export default function Home() {
           </div>
           <div>
             <div className="flex flex-col-reverse">
-              <h1 className="text-xl font-bold mb-2">Samsung NV70K1340BS/EG</h1>
+              <h1 className="text-xl font-bold mb-2">{productTitle}</h1>
               <strong className="text-xl">509 CHF</strong>
             </div>
             <section>
@@ -89,7 +124,11 @@ export default function Home() {
       </div>
       <dialog ref={dialogRef} className="p-5 shadow-md rounded-md">
         <h2 className="text-l font-bold">Stelle Fragen zum Produkt</h2>
-        <Chat />
+        <Chat
+          productImage={productImage}
+          productImageAlt={productImageAlt}
+          productDescription={productDescription}
+        />
       </dialog>
     </main>
   );

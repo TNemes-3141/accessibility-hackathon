@@ -4,12 +4,22 @@ import type { ChatResponse } from "../../app/api/chat/route";
 
 type MessageRole = "user" | "system";
 
-export function Chat() {
+export function Chat({
+  productImage,
+  productDescription,
+  productImageAlt,
+}: {
+  productImage: string;
+  productDescription: string;
+  productImageAlt: string;
+}) {
   const [messages, setMessages] = useState<
     Array<{ role: MessageRole; message: string }>
   >([]);
 
   useEffect(() => {
+    if (!productImage) return;
+
     fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -17,15 +27,15 @@ export function Chat() {
       },
       body: JSON.stringify({
         init: {
-          productImage: "tbd",
-          productImageAlt: "Alt text",
-          productDescription: "Product description",
+          productImage,
+          productDescription,
+          productImageAlt,
         },
       }),
     })
       .then((response) => response.json())
       .then(({ message }) => setMessages([{ role: "system", message }]));
-  }, []);
+  }, [productImage, productDescription, productImageAlt]);
 
   return (
     <form
