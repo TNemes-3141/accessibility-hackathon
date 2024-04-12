@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ChatResponse } from "../../app/api/chat/route";
 
 type MessageRole = "user" | "system";
@@ -8,6 +8,24 @@ export function Chat() {
   const [messages, setMessages] = useState<
     Array<{ role: MessageRole; message: string }>
   >([]);
+
+  useEffect(() => {
+    fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        init: {
+          productImage: "tbd",
+          productImageAlt: "Alt text",
+          productDescription: "Product description",
+        },
+      }),
+    })
+      .then((response) => response.json())
+      .then(({ message }) => setMessages([{ role: "system", message }]));
+  }, []);
 
   return (
     <form
