@@ -127,17 +127,7 @@ Gewicht
       <main>
         <div className="container mx-auto my-10 px-4">
           <div className="flex gap-10">
-            <div className="relative">
-              <AssistantButton dialogRef={dialogRef} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={productImageSrc}
-                alt={productImageAlt}
-                className="max-w-48"
-                ref={imageRef}
-              />
-            </div>
-            <div>
+            <div className="order-1">
               <div className="flex flex-col-reverse">
                 <h1 className="text-xl font-bold mb-2">{productTitle}</h1>
                 <strong className="text-xl">509 CHF</strong>
@@ -155,6 +145,16 @@ Gewicht
                   </button>
                 </div>
               </section>
+            </div>
+            <div className="relative">
+              <AssistantButton dialogRef={dialogRef} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={productImageSrc}
+                alt={productImageAlt}
+                className="max-w-48"
+                ref={imageRef}
+              />
             </div>
           </div>
         </div>
