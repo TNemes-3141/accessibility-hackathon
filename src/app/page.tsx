@@ -94,13 +94,14 @@ export default function Home() {
             </section>
           </div>
         </div>
-         <dialog ref={dialogRef} className="fixed bottom-0 right-0">
-        <h2>Stelle Fragen zum Produkt</h2>
+      </div>
+      <dialog ref={dialogRef} className="p-5 shadow-md rounded-md">
+        <h2 className="text-l font-bold">Stelle Fragen zum Produkt</h2>
         <form
           onSubmit={async (event) => {
             event.preventDefault();
 
-            const form = event.currentTarget;
+            const form = event.currentTarget as HTMLFormElement;
             const data = new FormData(form);
 
             const { response } = await fetch("/api/chat", {
@@ -125,15 +126,40 @@ export default function Home() {
         >
           <ol>
             {messages.map((message, index) => (
-              <li key={index}>{message.message}</li>
+              <li
+                key={index}
+                className={`${
+                  message.role === "system" ? `text-end` : `text-start`
+                }
+                  mb-2`}
+              >
+                {message.message}
+              </li>
             ))}
           </ol>
-          <label htmlFor="message">Deine Frage</label>
-          <input type="text" name="message" id="message" />
-          <button type="submit">Frage stellen</button>
+          <div className="d-flex">
+            <label htmlFor="message" className="sr-only">
+              Deine Frage
+            </label>
+            <input
+              type="text"
+              name="message"
+              id="message"
+              className="border border-gray-300 rounded-md rounded-r-none p-2"
+              placeholder="Deine Frage"
+            />
+            <button
+              type="submit"
+              className="border border-gray-300 rounded-md rounded-l-none p-2"
+              style={{
+                marginLeft: "-1px",
+              }}
+            >
+              Frage stellen
+            </button>
+          </div>
         </form>
       </dialog>
-      </div>
     </main>
   );
 }
