@@ -63,8 +63,6 @@ export default function Home() {
                 <button
                   className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
                   type="button"
-                  id="addToCartButton"
-                  data-test="addToCartButton"
                   title="In den Warenkorb"
                 >
                   <Cart />

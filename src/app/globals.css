@@ -5,6 +5,3 @@
 body {
 }
 
-button:focus-visible {
-  border-radius: 50%;
-}
