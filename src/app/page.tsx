@@ -174,6 +174,7 @@ Gewicht
           productImageAlt={productImageAlt}
           productDescription={productDescription}
           productSpecification={productSpecification}
+          dialogRef={dialogRef}
         />
       </dialog>
     </main>

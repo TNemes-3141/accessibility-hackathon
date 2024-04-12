@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import { SubmitButton } from "./submitButton";
 import type { ChatMessage, ChatOutput } from "../../app/api/chat/route";
 import { VoiceInput } from "../icon/icon";
@@ -9,13 +9,14 @@ export function Chat({
   productDescription,
   productImageAlt,
   productSpecification,
+  dialogRef,
 }: {
   productImage: string;
   productDescription: string;
   productImageAlt: string;
   productSpecification: string;
+  dialogRef: RefObject<HTMLDialogElement>;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<Array<ChatMessage>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
@@ -47,8 +48,10 @@ export function Chat({
 
   // Scroll to bottom after inserting message
   useEffect(() => {
-    inputRef.current?.scrollIntoView();
-  }, [messages]);
+    if (dialogRef.current) {
+      dialogRef.current.scrollTop = dialogRef.current.scrollHeight;
+    }
+  }, [messages, dialogRef]);
 
   return (
     <form
@@ -130,7 +133,6 @@ export function Chat({
               id="message"
               className="border border-gray-500 rounded-full px-4 pr-12 py-3 w-full placeholder:text-stone-500"
               placeholder="Deine Frage..."
-              ref={inputRef}
             />
             <button className="absolute top-2 right-2 p-2 rounded-full">
               <span className="sr-only">Spracheingabe</span>
