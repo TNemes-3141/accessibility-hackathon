@@ -1,5 +1,4 @@
 import OpenAI from "openai";
-import { OpenAIStream, StreamingTextResponse } from "ai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,14 +7,17 @@ const openai = new OpenAI({
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { message } = await req.json();
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    stream: true,
-    messages,
+    messages: [
+      {
+        role: "user",
+        content: message,
+      },
+    ],
   });
+  const responseMessage = response.choices[0].message.content;
 
-  const stream = OpenAIStream(response);
-
-  return new StreamingTextResponse(stream);
+  return new Response(JSON.stringify({ response: responseMessage }));
 }

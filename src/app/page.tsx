@@ -1,8 +1,14 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+
+type MessageRole = "user" | "system";
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [messages, setMessages] = useState<
+    Array<{ role: MessageRole; message: string }>
+  >([]);
+
   return (
     <main>
       <div className="container mx-auto my-10">
@@ -64,6 +70,42 @@ export default function Home() {
       </div>
       <dialog ref={dialogRef} className="fixed bottom-0 right-0">
         <h2>Stelle Fragen zum Produkt</h2>
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
+
+            const form = event.currentTarget;
+            const data = new FormData(form);
+
+            const { response } = await fetch("/api/chat", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ message: data.get("message") }),
+            }).then((response) => response.json());
+
+            setMessages([
+              ...messages,
+              ...[
+                {
+                  role: "user" as MessageRole,
+                  message: String(data.get("message")),
+                },
+                { role: "system" as MessageRole, message: response },
+              ],
+            ]);
+          }}
+        >
+          <ol>
+            {messages.map((message, index) => (
+              <li key={index}>{message.message}</li>
+            ))}
+          </ol>
+          <label htmlFor="message">Deine Frage</label>
+          <input type="text" name="message" id="message" />
+          <button type="submit">Frage stellen</button>
+        </form>
       </dialog>
     </main>
   );
