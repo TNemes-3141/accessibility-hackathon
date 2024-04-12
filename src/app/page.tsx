@@ -49,7 +49,7 @@ export default function Home() {
       </div>
       <dialog
         ref={dialogRef}
-        className="p-5 shadow-md rounded-md relative max-w-screen-sm sm:absolute sm:bottom-0"
+        className="p-5 shadow-md rounded-md max-w-screen-md absolute mb-0 mt-auto md:relative md:mt-auto md:mb-auto md:min-w-[800px]"
       >
         <button
           className="absolute top-2 right-2"
