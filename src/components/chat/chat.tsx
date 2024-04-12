@@ -1,19 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { ChatResponse } from "../../app/api/chat/route";
 import { SubmitButton } from "./submitButton";
+import type { ChatMessage, ChatOutput } from "../../app/api/chat/route";
 
-type MessageRole = "user" | "system";
-
-export function Chat() {
-  const [messages, setMessages] = useState<
-    Array<{ role: MessageRole; message: string }>
-  >([]);
+export function Chat({
+  productImage,
+  productDescription,
+  productImageAlt,
+}: {
+  productImage: string;
+  productDescription: string;
+  productImageAlt: string;
+}) {
+  const [messages, setMessages] = useState<Array<ChatMessage>>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
+    if (!productImage) return;
+
     fetch("/api/chat", {
       method: "POST",
       headers: {
@@ -21,18 +26,17 @@ export function Chat() {
       },
       body: JSON.stringify({
         init: {
-          productImage: "tbd",
-          productImageAlt: "Alt text",
-          productDescription: "Product description",
+          productImage,
+          productDescription,
+          productImageAlt,
         },
       }),
     })
       .then((response) => response.json())
       .then(({ message }) => {
         setMessages([{ role: "system", message }]);
-        setIsLoading(false);
       });
-  }, []);
+  }, [productImage, productDescription, productImageAlt]);
 
   return (
     <form
@@ -41,26 +45,33 @@ export function Chat() {
 
         const form = event.currentTarget as HTMLFormElement;
         const data = new FormData(form);
+        
+        setIsLoading(true);
 
         const response = (await fetch("/api/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: data.get("message") }),
-        }).then((response) => response.json())) as ChatResponse;
+          body: JSON.stringify({
+            message: data.get("message"),
+            history: messages,
+          }),
+        }).then((response) => response.json())) as ChatOutput;
+        
+        setIsLoading(false);
 
         const newMessages = [
           ...messages,
           {
-            role: "user" as MessageRole,
+            role: "user" as ChatMessage["role"],
             message: String(data.get("message")),
           },
         ];
 
         if (response.message) {
           newMessages.push({
-            role: "system" as MessageRole,
+            role: "system" as ChatMessage["role"],
             message: response.message,
           });
         }
