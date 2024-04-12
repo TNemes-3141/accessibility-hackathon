@@ -1,16 +1,11 @@
 "use client";
 import { RatingStars } from "@/components/ratingStars/ratingStars";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Chat } from "../components/chat/chat";
 import { AssistantButton } from "@/components/assistantButton/assistantButton";
 
-type MessageRole = "user" | "system";
-
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [messages, setMessages] = useState<
-    Array<{ role: MessageRole; message: string }>
-  >([]);
 
   return (
     <main>
@@ -18,11 +13,7 @@ export default function Home() {
         <div className="flex gap-10">
           <div className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://www.digitec.ch/im/Files/3/0/8/0/6/2/2/8/de-electric-oven-nv70k1340bs-nv70k1340bs-eg-frontsilver-68068844?impolicy=ProductTileImage&resizeWidth=992&resizeHeight=963&cropWidth=992&cropHeight=963&quality=high"
-              alt=""
-              className="max-w-48"
-            />
+            <img src="/oven.avif" alt="" className="max-w-48" />
             <AssistantButton dialogRef={dialogRef} />
           </div>
           <div>
