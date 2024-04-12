@@ -2,7 +2,8 @@
 import { RatingStars } from "@/components/ratingStars/ratingStars";
 import { useEffect, useRef, useState } from "react";
 import { Chat } from "../components/chat/chat";
-import { Cart, Help } from "@/components/icon/icon";
+import { AssistantButton } from "@/components/assistantButton/assistantButton";
+import { Cart, Close } from "@/components/icon/icon";
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -42,6 +43,7 @@ export default function Home() {
       <div className="container mx-auto my-10">
         <div className="flex gap-10">
           <div className="relative">
+            <AssistantButton dialogRef={dialogRef} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={productImageSrc}
@@ -49,16 +51,6 @@ export default function Home() {
               className="max-w-48"
               ref={imageRef}
             />
-            <button
-              type="button"
-              className="absolute bottom-0 border-radius-50"
-              onClick={() => {
-                dialogRef.current?.showModal();
-              }}
-            >
-              <span className="sr-only">Fragen zum Bild stellen</span>
-              <Help />
-            </button>
           </div>
           <div>
             <div className="flex flex-col-reverse">
@@ -69,7 +61,7 @@ export default function Home() {
               <RatingStars />
               <div className="mt-7">
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full flex gap-3 items-center focus-visible:outline-offset-4"
                   type="button"
                   id="addToCartButton"
                   data-test="addToCartButton"
@@ -83,8 +75,18 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <dialog ref={dialogRef} className="p-5 shadow-md rounded-md">
-        <h2 className="text-l font-bold">Stelle Fragen zum Produkt</h2>
+      <dialog
+        ref={dialogRef}
+        className="p-5 shadow-md rounded-md max-w-screen-md absolute mb-0 mt-auto md:relative md:mt-auto md:mb-auto md:min-w-[800px]"
+      >
+        <button
+          className="absolute top-2 right-2"
+          onClick={() => dialogRef.current?.close()}
+        >
+          <span className="sr-only">Schliessen</span>
+          <Close />
+        </button>
+        <h2 className="mb-4 text-l font-bold">Stelle Fragen zum Produkt</h2>
         <Chat
           productImage={productImage}
           productImageAlt={productImageAlt}

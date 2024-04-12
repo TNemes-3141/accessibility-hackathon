@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import { SubmitButton } from "./submitButton";
 import type { ChatMessage, ChatOutput } from "../../app/api/chat/route";
+import { VoiceInput } from "../icon/icon";
 
 export function Chat({
   productImage,
@@ -12,6 +14,8 @@ export function Chat({
   productImageAlt: string;
 }) {
   const [messages, setMessages] = useState<Array<ChatMessage>>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!productImage) return;
@@ -30,7 +34,9 @@ export function Chat({
       }),
     })
       .then((response) => response.json())
-      .then(({ message }) => setMessages([{ role: "system", message }]));
+      .then(({ message }) => {
+        setMessages([{ role: "system", message }]);
+      });
   }, [productImage, productDescription, productImageAlt]);
 
   return (
@@ -40,6 +46,8 @@ export function Chat({
 
         const form = event.currentTarget as HTMLFormElement;
         const data = new FormData(form);
+
+        setIsLoading(true);
 
         const response = (await fetch("/api/chat", {
           method: "POST",
@@ -51,6 +59,8 @@ export function Chat({
             history: messages,
           }),
         }).then((response) => response.json())) as ChatOutput;
+
+        setIsLoading(false);
 
         const newMessages = [
           ...messages,
@@ -68,39 +78,50 @@ export function Chat({
         }
 
         setMessages(newMessages);
+        form.reset();
       }}
     >
-      <ol>
+      <ol className="flex flex-col">
         {messages.map((message, index) => (
           <li
             key={index}
-            className={`${message.role === "system" ? `text-end` : `text-start`}
-                  mb-2`}
+            className={`${
+              message.role === "system"
+                ? `bg-message p-3 rounded-lg inline-block justify-self-end`
+                : `text-start`
+            }
+                  mb-6`}
+            aria-live="polite"
           >
             {message.message}
           </li>
         ))}
       </ol>
-      <div className="d-flex">
+      <div>
         <label htmlFor="message" className="sr-only">
           Deine Frage
         </label>
-        <input
-          type="text"
-          name="message"
-          id="message"
-          className="border border-gray-300 rounded-md rounded-r-none p-2"
-          placeholder="Deine Frage"
-        />
-        <button
-          type="submit"
-          className="border border-gray-300 rounded-md rounded-l-none p-2"
-          style={{
-            marginLeft: "-1px",
-          }}
-        >
-          Frage stellen
-        </button>
+        <div className="flex gap-2">
+          <div className="relative flex-grow flex-shrink-0">
+            {isLoading && (
+              <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              </div>
+            )}
+            <input
+              type="text"
+              name="message"
+              id="message"
+              className="border border-gray-300 rounded-full px-4 pr-12 py-3 w-full"
+              placeholder="Deine Frage..."
+            />
+            <button className="absolute top-2 right-2 p-2 rounded-full">
+              <span className="sr-only">Spracheingabe</span>
+              <VoiceInput />
+            </button>
+          </div>
+          <SubmitButton />
+        </div>
       </div>
     </form>
   );
