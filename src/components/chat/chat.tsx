@@ -14,8 +14,8 @@ export function Chat({
   productImageAlt: string;
 }) {
   const [messages, setMessages] = useState<Array<ChatMessage>>([]);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
     if (!productImage) return;
@@ -36,6 +36,8 @@ export function Chat({
       .then((response) => response.json())
       .then(({ message }) => {
         setMessages([{ role: "system", message }]);
+
+        setIsInitializing(false);
       });
   }, [productImage, productDescription, productImageAlt]);
 
@@ -81,6 +83,9 @@ export function Chat({
         form.reset();
       }}
     >
+      {isInitializing && (
+        <p className="mb-6">Unser Chatbot analyisiert gerade das Produkt...</p>
+      )}
       <ol className="flex flex-col">
         {messages.map((message, index) => (
           <li
@@ -103,7 +108,7 @@ export function Chat({
         </label>
         <div className="flex gap-2">
           <div className="relative flex-grow flex-shrink-0">
-            {isLoading && (
+            {(isLoading || isInitializing) && (
               <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
               </div>
