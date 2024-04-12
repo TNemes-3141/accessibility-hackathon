@@ -146,13 +146,13 @@ Gewicht
                 </div>
               </section>
             </div>
-            <div className="relative">
+            <div className="relative self-start">
               <AssistantButton dialogRef={dialogRef} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={productImageSrc}
                 alt={productImageAlt}
-                className="max-w-48"
+                className="w-48 min-w-24"
                 ref={imageRef}
               />
             </div>
