@@ -1,6 +1,7 @@
 "use client";
 import { RatingStars } from "@/components/ratingStars/ratingStars";
 import { useRef, useState } from "react";
+import { Chat } from "../components/chat/chat";
 
 type MessageRole = "user" | "system";
 
@@ -97,68 +98,7 @@ export default function Home() {
       </div>
       <dialog ref={dialogRef} className="p-5 shadow-md rounded-md">
         <h2 className="text-l font-bold">Stelle Fragen zum Produkt</h2>
-        <form
-          onSubmit={async (event) => {
-            event.preventDefault();
-
-            const form = event.currentTarget as HTMLFormElement;
-            const data = new FormData(form);
-
-            const { response } = await fetch("/api/chat", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ message: data.get("message") }),
-            }).then((response) => response.json());
-
-            setMessages([
-              ...messages,
-              ...[
-                {
-                  role: "user" as MessageRole,
-                  message: String(data.get("message")),
-                },
-                { role: "system" as MessageRole, message: response },
-              ],
-            ]);
-          }}
-        >
-          <ol>
-            {messages.map((message, index) => (
-              <li
-                key={index}
-                className={`${
-                  message.role === "system" ? `text-end` : `text-start`
-                }
-                  mb-2`}
-              >
-                {message.message}
-              </li>
-            ))}
-          </ol>
-          <div className="d-flex">
-            <label htmlFor="message" className="sr-only">
-              Deine Frage
-            </label>
-            <input
-              type="text"
-              name="message"
-              id="message"
-              className="border border-gray-300 rounded-md rounded-r-none p-2"
-              placeholder="Deine Frage"
-            />
-            <button
-              type="submit"
-              className="border border-gray-300 rounded-md rounded-l-none p-2"
-              style={{
-                marginLeft: "-1px",
-              }}
-            >
-              Frage stellen
-            </button>
-          </div>
-        </form>
+        <Chat />
       </dialog>
     </main>
   );
