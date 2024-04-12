@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { ChatResponse } from "../../app/api/chat/route";
-
-type MessageRole = "user" | "system";
+import type { ChatMessage, ChatOutput } from "../../app/api/chat/route";
 
 export function Chat({
   productImage,
@@ -13,9 +11,7 @@ export function Chat({
   productDescription: string;
   productImageAlt: string;
 }) {
-  const [messages, setMessages] = useState<
-    Array<{ role: MessageRole; message: string }>
-  >([]);
+  const [messages, setMessages] = useState<Array<ChatMessage>>([]);
 
   useEffect(() => {
     if (!productImage) return;
@@ -50,20 +46,23 @@ export function Chat({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: data.get("message") }),
-        }).then((response) => response.json())) as ChatResponse;
+          body: JSON.stringify({
+            message: data.get("message"),
+            history: messages,
+          }),
+        }).then((response) => response.json())) as ChatOutput;
 
         const newMessages = [
           ...messages,
           {
-            role: "user" as MessageRole,
+            role: "user" as ChatMessage["role"],
             message: String(data.get("message")),
           },
         ];
 
         if (response.message) {
           newMessages.push({
-            role: "system" as MessageRole,
+            role: "system" as ChatMessage["role"],
             message: response.message,
           });
         }
