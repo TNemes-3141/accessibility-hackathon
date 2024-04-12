@@ -87,7 +87,9 @@ export function Chat({
       }}
     >
       {isInitializing && (
-        <p className="mb-6">Unser Chatbot analyisiert gerade das Produkt...</p>
+        <p className="mb-6">
+          🦅 Dein Hawkeye analyisiert gerade das Produkt...
+        </p>
       )}
       <ol className="flex flex-col">
         {messages.map((message, index) => (
