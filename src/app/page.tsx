@@ -78,7 +78,7 @@ export default function Home() {
         className="p-5 shadow-md rounded-md max-w-screen-md absolute mb-0 mt-auto md:relative md:mt-auto md:mb-auto md:min-w-[800px]"
       >
         <button
-          className="absolute top-2 right-2"
+          className="absolute top-2 right-2 rounded-full"
           onClick={() => dialogRef.current?.close()}
         >
           <span className="sr-only">Schliessen</span>
